@@ -1,0 +1,76 @@
+*** Settings ***
+Library           Selenium2Library
+Library           OperatingSystem
+Resource          行为导入专用.txt
+
+*** Variables ***
+${客服标签}           //*[@id="navBox"]/ul/li[8]/a
+${下载}             //*[@id="navBox"]/ul/li[7]/a
+
+*** Keywords ***
+杀掉进程
+    OperatingSystem.Run    taskkill /f /im \ chromedriver.exe
+
+浏览器最大化
+    Maximize Browser Window
+
+输入密码
+    [Arguments]    ${locater}    ${password}
+    Input Password    ${locater}    ${password}
+
+文本输入框
+    [Arguments]    ${locater}    ${input1}    ${time}=0
+    Input Text    ${locater}    ${input1}
+    sleep    ${time}
+
+打开浏览器
+    [Arguments]    ${url}    ${browser}
+    Open Browser    ${url}    ${browser}
+
+点击按钮
+    [Arguments]    ${button}
+    Click Button    ${button}
+
+等待时间
+    [Arguments]    ${time}
+    sleep    ${time}
+
+输入验证码
+    [Arguments]    ${locater}    ${input2}
+    Input Text    ${locater}    ${input2}
+
+关闭浏览器
+    Close Browser
+
+鼠标悬浮
+    [Arguments]    ${locater}
+    Mouse Over    ${locater}
+
+点击元素
+    [Arguments]    ${locator}
+    Click Element    ${locator}
+
+清理浏览器缓存
+    run keyword if    '${browserClass}' == 'ff' or '${browserClass}' == 'firefox'    operatingsystem.run    taskkill /f /im geckodriver.exe
+    ...    ELSE IF    '${browserClass}' == 'gc' or '${browserClass}' == 'chrome'    operatingsystem.run    taskkill /f /im chromedriver.exe
+    ...    ELSE IF    '${browserClass}' == 'ie' or '${browserClass}' == 'IE    operatingsystem.run    taskkill /f /im IEdriver.exe
+
+左击
+    [Arguments]    ${locator}    ${info}=0
+    sleep    1
+    Click Element    ${locator}
+    Comment    log    $info
+    run keyword if    '${info}'<'20' and '${info}'>='0'    sleep    ${info}
+    ...    ELSE    Wait Until Page Contains    ${info}    20s
+
+回车
+    [Arguments]    ${locator}
+    press key    ${locator}    \\13
+
+点击确定
+    confirm action
+
+输入
+    [Arguments]    ${locator}    ${text}    ${time}=0
+    Input Text    ${locator}    ${text}
+    sleep    ${time}

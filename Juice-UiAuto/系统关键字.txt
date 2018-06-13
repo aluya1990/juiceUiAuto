@@ -1,0 +1,58 @@
+*** Settings ***
+Library           OperatingSystem
+Library           Selenium2Library
+Resource          行为导入专用.txt
+Resource          元素定位操作.txt
+
+*** Keywords ***
+登录
+    杀掉进程
+    打开浏览器    https://testsh.dev.kfpt.com:20000/login    chrome
+    浏览器最大化
+    文本输入框    xpath=//*[@type='text']    juzhen110
+    输入密码    xpath=//*[@type='password']    juzhen1234
+    输入验证码    xpath=//*[@placeholder='验证码']    6666
+    点击按钮    xpath=//*[@type='button']
+    等待时间    2
+    ${Text}    Get Text    xpath=//*[@title="juzhen110"]
+    Should Contain    ${Text}    juzhen110
+    等待时间    2
+
+修改密码
+    等待时间    2
+    鼠标悬浮    xpath=//*[@title="juzhen110"]
+    点击元素    xpath=//*[@title="juzhen110"]
+    等待时间    2
+    鼠标悬浮    xpath=//*[@class="change-password"]/button
+    点击元素    xpath=//*[@class="change-password"]/button
+    等待时间    2
+    文本输入框    xpath=//*[@placeholder='请输入原密码']    juzhen123
+    文本输入框    xpath=//*[@placeholder='请输入新密码']    juzhen1234
+    文本输入框    xpath=//*[@placeholder='请再次输入密码']    juzhen1234
+    点击按钮    xpath=//*[@type='button' and @class='el-button el-button--primary']
+    等待时间    2
+
+修改手机号
+    鼠标悬浮    xpath=//*[@title="juzhen110"]
+    点击元素    xpath=//*[@title="juzhen110"]
+    鼠标悬浮    xpath=//div[@class='change-password']/button[text()='修改手机']
+    点击元素    xpath=//div[@class='change-password']/button[text()='修改手机']
+    文本输入框    xpath=//*[@placeholder='请输入密码']    juzhen1234
+    点击元素    xpath=//*[@id="app"]/div[2]/div[3]/div/div[3]/button[2]
+    Wait Until Page Contains    新手机号
+    文本输入框    xpath=//*[@placeholder='填写新手机']    13170430912
+    文本输入框    xpath=//*[@placeholder='请输入验证码']    666666
+    点击按钮    xpath=//button[@class='el-button el-button--info']
+
+修改邮箱
+    等待时间    2
+    鼠标悬浮    xpath=//*[@title="juzhen110"]
+    点击元素    xpath=//*[@title="juzhen110"]
+    等待时间    2
+    鼠标悬浮    xpath=//div[@class='change-password']/button[text()='修改邮箱']
+    点击元素    xpath=//div[@class='change-password']/button[text()='修改邮箱']
+    等待时间    2
+    点击按钮    xpath=//button[@class='el-button btn el-button--primary']
+    等待时间    2
+    文本输入框    xpath=//*[@placeholder='填写新邮箱']    981130526@qq.com
+    点击按钮    xpath=//button[@class='el-button el-button--primary']

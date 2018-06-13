@@ -1,0 +1,11 @@
+*** Settings ***
+Library           String
+Resource          系统关键字.txt
+Resource          元素定位操作.txt
+Library           OperatingSystem
+Library           Selenium2Library
+Library           DatabaseLibrary
+Library           BuiltIn
+Library           Collections
+Library           AutoItLibrary
+Library           RequestsLibrary
